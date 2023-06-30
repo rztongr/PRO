@@ -1,0 +1,1 @@
+python demultiplexing.py -i examples/testdata/sequencing_fastq -b examples/testdata/12.csv -f examples/testdata/flankings.fasta -o examples/testoutput/dex_result -t 10
