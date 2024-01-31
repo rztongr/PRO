@@ -10,6 +10,9 @@ def initialization_parameters():
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', action='store', dest='barcode_path', type=str, required=True, help='barcode_path')
     parser.add_argument('-e', action='store', dest='barcode_error_path', type=str, required=True, help='barcode_error_path')
+    # optional
+    parser.add_argument('-a', action='store', dest='sequencing_accuracy', type=float, required=False, default=0.88,
+                        help='sequencing accuracy') 
     args = parser.parse_args()
     return args
 
@@ -25,7 +28,7 @@ def get_dex_barcode(i):
     max=0
     bar_err=barcode_error[i]
     for seq_2 in barcodes:
-        d=metric(seq_2,bar_err)
+        d=metric(seq_2,bar_err,sequencing_accuracy)
         if d>max:
             max=d
             barcode=seq_2
@@ -40,7 +43,8 @@ if __name__ == '__main__':
 
     args = initialization_parameters()
     barcode_path=args.barcode_path
-    barcode_error_path=args.barcode_error_path 
+    barcode_error_path=args.barcode_error_path
+    sequencing_accuracy=args.sequencing_accuracy
     
     barcode_error=read_file(barcode_error_path)
     barcodes = read_file(barcode_path)
