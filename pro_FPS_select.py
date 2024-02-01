@@ -14,13 +14,13 @@ from edit_distance import weight
 
 def update(seq1, seq2, i):
     # print(i)
-    d = weight(seq1, seq2)
+    d = weight(seq1, seq2, sequencing_accuracy)
     re = (i, d)
     return re
 
 
 def thresh(num, l):
-    thres = (0.88**l)*(((1/3)*(1/4)*(1-0.88))**num)
+    thres = (sequencing_accuracy**l)*(((1/3)*(1/4)*(1-sequencing_accuracy))**num)
     return thres**2
 
 
@@ -50,7 +50,7 @@ def pre_process():
     command_output_file = ' -o ' + output_pre_path
     command_away_flankings = ' -f ' + flankings
     command_quantity = ' -q ' + str(quantity)
-    command = 'python /home/renzt/PRO/module/Pre_processing/pre_processing.py' + command_length + \
+    command = 'python ./module/Pre_processing/pre_processing.py' + command_length + \
         command_output_file+command_quantity + command_away_flankings+command_input_path
     os.system(command)
     d = read_file(output_pre_path)
@@ -106,9 +106,11 @@ def initialization_parameters():
                         help='Specify the length of a barcode sequence')
     parser.add_argument('-th', action='store', dest='threshold_number', type=int, required=True,
                         help='Set threshold:the number of edit errors for which a barcode can be correctly demultiplexed')  # 对不同长度设定不同的默认阈值
-    parser.add_argument('-o', action='store', dest='output_path', type=str, required=False, default='None_file',
+    parser.add_argument('-o', action='store', dest='output_path', type=str, required=True, default='None_file',
                         help='Output_path. Default output would the current directory')
     # Optional
+    parser.add_argument('-a', action='store', dest='sequencing_accuracy', type=float, required=False, default=0.88,
+                        help='sequencing accuracy')
     parser.add_argument('-q', action='store', dest='quantity', type=int, required=False, default=100000,
                         help='Number of barcodes after pre-processing.')
     parser.add_argument('-i', action='store', dest='input_path', type=str, required=False, default='None_file',
@@ -137,13 +139,18 @@ if __name__ == '__main__':
     se = args.seed
     flankings = args.flankings
     input_path = args.input_path
+    sequencing_accuracy = args.sequencing_accuracy
     
     threshold = thresh(threshold_number, barcode_length)
 
     if output_path=="None_file":
         output_path='pro_FPS_select'
-    else:    
-        output_path = output_path+'/pro_FPS_select'
+    else:
+        if sequencing_accuracy!=0.88:
+            output_path = output_path+'/pro_FPS_select_' + str(sequencing_accuracy)
+        else:
+            output_path = output_path+'/pro_FPS_select'
+
     output_pre_path = output_path + '/pre_processing_barcodes.txt'
 
     dataset = pre_process()

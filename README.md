@@ -4,7 +4,7 @@ A software package for generating and demultiplexing DNA barcodes in nanopore se
 Information about the paper
 
 ## Overview
-Here，we develop a software package PRO which can generate and demultiplex barcodes for nanopore sequencing. PRO is based on probability divergence, a "metric" we propose for the dissimilarity between two DNA sequences. For generating barcodes, PRO ensures that any two barcode sequences in a barcode kit are sufficiently distinct from each other. Using PRO, we have greatly expanded the capacity of barcode. For demultiplexing barcodes, PRO achieves higher precision than demultiplexin tools now available for nanopore sequencing in our experiments.
+Here，we develop a software package PRO which can generate and demultiplex barcodes for nanopore sequencing. PRO is based on probability divergence, a "metric" we propose for the dissimilarity between two DNA sequences. For generating barcodes, PRO ensures that any two barcode sequences in a barcode kit are sufficiently distinct from each other. Using PRO, we have greatly expanded the capacity of barcode. For demultiplexing barcodes, PRO achieves higher precision than demultiplexing tools now available for nanopore sequencing in our experiments.
 
 ## Installation
     PRO can be used on the linux system.
