@@ -2,6 +2,7 @@
 import random
 import sys
 import os
+import shutil
 import time
 import argparse
 from tqdm import tqdm
@@ -14,21 +15,13 @@ from edit_distance import weight
 
 def update(seq1, seq2, i):
     # print(i)
-<<<<<<< HEAD
     d = weight(seq1, seq2, sequencing_accuracy)
-=======
-    d = weight(seq1, seq2)
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
     re = (i, d)
     return re
 
 
 def thresh(num, l):
-<<<<<<< HEAD
     thres = (sequencing_accuracy**l)*(((1/3)*(1/4)*(1-sequencing_accuracy))**num)
-=======
-    thres = (0.88**l)*(((1/3)*(1/4)*(1-0.88))**num)
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
     return thres**2
 
 
@@ -108,23 +101,23 @@ def FPSselection():
     file.close()
 
 
+def check_and_remove_file(folder_path):
+    if os.path.exists(folder_path):
+        shutil.rmtree(folder_path)
+        print(f"warning!!! The folder {folder_path} exists, the original folder has been deleted!")
+
+
 def initialization_parameters():
     parser = argparse.ArgumentParser()
     parser.add_argument('-l', action='store', dest='barcode_length', type=int, required=True,
                         help='Specify the length of a barcode sequence')
     parser.add_argument('-th', action='store', dest='threshold_number', type=int, required=True,
                         help='Set threshold:the number of edit errors for which a barcode can be correctly demultiplexed')  # 对不同长度设定不同的默认阈值
-<<<<<<< HEAD
     parser.add_argument('-o', action='store', dest='output_path', type=str, required=True, default='None_file',
                         help='Output_path. Default output would the current directory')
     # Optional
     parser.add_argument('-a', action='store', dest='sequencing_accuracy', type=float, required=False, default=0.88,
                         help='sequencing accuracy')
-=======
-    parser.add_argument('-o', action='store', dest='output_path', type=str, required=False, default='None_file',
-                        help='Output_path. Default output would the current directory')
-    # Optional
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
     parser.add_argument('-q', action='store', dest='quantity', type=int, required=False, default=100000,
                         help='Number of barcodes after pre-processing.')
     parser.add_argument('-i', action='store', dest='input_path', type=str, required=False, default='None_file',
@@ -153,26 +146,17 @@ if __name__ == '__main__':
     se = args.seed
     flankings = args.flankings
     input_path = args.input_path
-<<<<<<< HEAD
     sequencing_accuracy = args.sequencing_accuracy
-=======
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
     
     threshold = thresh(threshold_number, barcode_length)
 
     if output_path=="None_file":
         output_path='pro_FPS_select'
-<<<<<<< HEAD
     else:
-        if sequencing_accuracy!=0.88:
-            output_path = output_path+'/pro_FPS_select_' + str(sequencing_accuracy)
-        else:
-            output_path = output_path+'/pro_FPS_select'
-
-=======
-    else:    
         output_path = output_path+'/pro_FPS_select'
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
+    check_and_remove_file(output_path)    
+        
+
     output_pre_path = output_path + '/pre_processing_barcodes.txt'
 
     dataset = pre_process()
