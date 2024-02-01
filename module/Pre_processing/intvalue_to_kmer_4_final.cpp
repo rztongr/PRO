@@ -99,7 +99,6 @@ std::string intval_to_kmer(kmer_int_type_t intval, unsigned int kmer_length)
   return (kmer);
 }
 
-// 读入的文件中的数字是字符串形式，将其转换为整数类型
 class Solution
 {
 public:
@@ -110,7 +109,6 @@ public:
       return 0;
     }
 
-    // 记录字符串的对应符号
     int symbol = 1;
     if (str[0] == '-')
     {
@@ -123,7 +121,6 @@ public:
       str[0] = '0';
     }
 
-    // 字符串转整数，sum记录转换后的数据
     long sum = 0;
     for (int i = 0; i < str.size(); i++)
     {
@@ -147,13 +144,11 @@ void ShowUsage()
   cout << " --input_file=your input_flie path   The default is the pre.txt file in current folder. " << endl;
   cout << " --output_file=your onput_flie path  The default is the pre.txt file in current folder. " << endl;
   cout << " --input_data=input_data             0 is string -> int value, 1 is int value -> string. " << endl;
-  // cout << " --help                            Print this help." << endl;
   return;
 }
 
 int main(int argc, char *argv[])
 {
-  // 如果用户没有输入参数，则提示错误信息并退出
   if (argc < 2)
   {
     cout << "No arguments, you MUST give an argument at least!" << endl;
@@ -212,27 +207,23 @@ int main(int argc, char *argv[])
   cout << "onput_file is: " << stroutput << endl;
 
   // int value -> string
-  //  读取文件
   vector<string> dataset;
   string type_1 = "num";
   string type_2 = "string";
-  // 读取1.in.txt文件数据
-  ifstream fin(strinput);
+
+  ifstream fin(strinput.c_str());
   if (!fin.is_open())
   {
     cout << "open error!" << endl;
   }
-  // 将数据存入vv数组(以字符串形式)
+
 
   string temp;
   while (getline(fin, temp))
   {
     dataset.push_back(temp);
   }
-  // cout << dataset.size() << endl;
-  // cout << "signed long long is " << sizeof(long long) << " bytes." << endl << endl;
 
-  // int value -> string (num 转 string)
   if (strinputdata == type_1)
   {
     vector<unsigned long long> select;
@@ -247,21 +238,18 @@ int main(int argc, char *argv[])
     for (unsigned long long i = 0; i < select.size(); i++)
     {
       unsigned long long g = select[i];
-      // cout<<i<<" "<<g<<endl;
       string kmer_ = intval_to_kmer(g, kmer_length);
       kmer_seq.push_back(kmer_);
-      // cout<<"the "<<kmer_length<<"mer string for int "<<k<<" is: "<<kmer_<<endl;
     }
     // cout << kmer_seq.size() << endl;
 
-    ofstream fout;        // 创建ofstream
-    fout.open(stroutput); // 关联一个文件
+    ofstream fout;
+    fout.open(stroutput.c_str()); 
     for (unsigned long long h = 0; h < kmer_seq.size(); h++)
     {
-      fout << kmer_seq[h] << endl; // 写入
-      // cout << kmer_seq[h] << endl;
+      fout << kmer_seq[h] << endl;
     }
-    fout.close(); // 关闭
+    fout.close();
   }
 
   // string -> int value (string 转 num)
@@ -274,15 +262,14 @@ int main(int argc, char *argv[])
       g = kmer_to_intval(dataset[i]);
       num.push_back(g);
     }
-    // cout << "num.size()" << num.size() << endl;
 
-    ofstream fout;        // 创建ofstream
-    fout.open(stroutput); // 关联一个文件
+    ofstream fout;
+    fout.open(stroutput.c_str());
     for (unsigned long long h = 0; h < num.size(); h++)
     {
-      fout << num[h] << endl; // 写入
+      fout << num[h] << endl;
     }
-    fout.close(); // 关闭
+    fout.close();
   }
   return 0;
 }
