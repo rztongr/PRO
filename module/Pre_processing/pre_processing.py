@@ -26,10 +26,8 @@ def split_list(N, n):
     samp = []
     size, rest = divmod(N, n)
     if rest == 0 and size > n:
-        print(size, rest)
         return split(size, n)
     else:
-        print(size, rest)
         start = 0
         for i in range(n):
             step = size + 1 if i < rest else size

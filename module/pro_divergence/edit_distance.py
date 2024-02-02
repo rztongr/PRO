@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-# from pprint import pprint
-import time
-time_start = time.time()
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
 
 
 class Solution:
@@ -42,72 +36,28 @@ class Solution:
                 j -= 1
                 res.append(("" , "" , "" , "" , "non"))
             elif b == min([a, b, c]):
-<<<<<<< HEAD
                 i = i - 1
                 res.append((i, i + 1, word1[i], "", "del"))
             elif a == min([a, b, c]):
-=======
-                # 删除
-                i = i - 1
-                res.append((i, i + 1, word1[i], "", "del"))
-            elif a == min([a, b, c]):
-                # 替换
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
                 i -= 1
                 j -= 1
                 res.append((i, i + 1, word1[i], word2[j], "sub"))  
             else:
-<<<<<<< HEAD
-=======
-                # 插入
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
                 j = j - 1
                 res.append((i + 1, i + 1, "", word2[j], "ins"))
         return res
 
-<<<<<<< HEAD
 def metric(word1, word2, error_rate):
     operate = []
     obj = Solution()
     dp, min_distance = obj.minDistance(word1, word2)
     res = obj.backpath(word1, word2, dp)
-=======
-# def metric(word1, word2):
-#     q = 0.88
-#     operate = []
-#     obj = Solution()
-#     dp, min_distance = obj.minDistance(word1, word2)
-#     #print(min_distance)
-#     res = obj.backpath(word1, word2, dp)
-#     #print(res)
-#     for i in res:
-#         operate.append(list(i)[4])
-#     c = operate.count('non')
-#     s = operate.count('sub')
-#     i = operate.count('ins')
-#     d = operate.count('del')
-#     #print(c,s,i,d)
-#     # metr = q ** c * ((1 / 3) * (1 - q)) ** d * ((1 / 3)**2 * (1 - q)) ** s *((1 / 3)*(1 / 4) * (1 - q)) ** i
-#     metr = q ** c * ((1 / 3) * (1 - q)) ** d * ((1 / 3)**2 * (1 - q)) ** s *((1 / 3)*(1 / 4) * (1 - q)) ** i
-#     #print(metr)
-#     return metr
-
-def metric(word1, word2):
-    q = 0.88
-    operate = []
-    obj = Solution()
-    dp, min_distance = obj.minDistance(word1, word2)
-    #print(min_distance)
-    res = obj.backpath(word1, word2, dp)
-    #print(res)
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
     for i in res:
         operate.append(list(i)[4])
     c = operate.count('non')
     s = operate.count('sub')
     i = operate.count('ins')
     d = operate.count('del')
-<<<<<<< HEAD
     metr = error_rate ** c * ((1 / 3) * (1 - error_rate)) ** d * ((1 / 3)**2 * (1 - error_rate)) ** s *((1 / 3)*(1 / 4) * (1 - error_rate)) ** i
     return metr
 
@@ -116,20 +66,3 @@ def weight(word1, word2, error_rate):
     w2=metric(word2, word1, error_rate)
     w=max(w1,w2)
     return w
-=======
-    #print(c,s,i,d)
-    metr = q ** c * ((1 / 3) * (1 - q)) ** d * ((1 / 3)**2 * (1 - q)) ** s *((1 / 3)*(1 / 4) * (1 - q)) ** i
-    #print(metr)
-    return metr
-
-def weight(word1,word2):
-    w1=metric(word1, word2)
-    w2=metric(word2, word1)
-    #print(w1,w2)
-    w=max(w1,w2)
-    return w
-
-
-time_end = time.time()
-time_sum = time_end - time_start
->>>>>>> 2c04df41c9b4d3a24fc3553359e4acfc47e5a1e4
